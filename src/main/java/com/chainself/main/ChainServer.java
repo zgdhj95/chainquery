@@ -75,6 +75,13 @@ public class ChainServer {
 				return "";
 			}
 		});
+		get(new Route("/querytest") {
+			@Override
+			public Object handle(Request request, Response response) {
+				String market = request.queryParams("market");
+				return "test" + market;
+			}
+		});
 	}
 
 }
