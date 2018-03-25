@@ -15,9 +15,9 @@ package com.chainself.main;
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-
 import static spark.Spark.get;
-import static spark.Spark.setPort;
+import static spark.Spark.port;
+import static spark.Spark.threadPool;
 
 import java.util.Timer;
 
@@ -28,9 +28,6 @@ import com.chainself.crawler.BinanceCrawler;
 import com.chainself.crawler.HuobiCrawler;
 
 import io.itit.itf.okhttp.FastHttpClient;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 
 /**
  * An HTTP server that sends back the content of the received HTTP request in a
@@ -57,39 +54,31 @@ public class ChainServer {
 	}
 
 	public static void startSparkHttpServer() throws Exception {
-		setPort(80);
-		get(new Route("/query") {
-			@Override
-			public Object handle(Request request, Response response) {
-				String market = request.queryParams("market");
-				String chain = request.queryParams("chain");
-				String unit = request.queryParams("unit");
-				if (market == null || "".equals(market) || chain == null || "".equals(chain) || unit == null
-						|| "".equals(unit)) {
-					return "";
-				}
-				String key = market + "_" + chain + unit;
-				System.out.println("query:" + key);
-				try {
-					JSONObject json = PriceCache.getPrice(market, chain, unit);
-					if (json != null) {
-						System.out.println("chain is:" + json.toJSONString());
-						return json.toJSONString();
-					} else {
-						return "chain not exists:" + key;
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		int maxThreads = 10;
+		threadPool(maxThreads);
+		port(80);
+		get("/query", (req, res) -> {
+			String market = req.queryParams("market");
+			String chain = req.queryParams("chain");
+			String unit = req.queryParams("unit");
+			if (market == null || "".equals(market) || chain == null || "".equals(chain) || unit == null
+					|| "".equals(unit)) {
 				return "";
 			}
-		});
-		get(new Route("/querytest") {
-			@Override
-			public Object handle(Request request, Response response) {
-				String market = request.queryParams("market");
-				return "test" + market;
+			String key = market + "_" + chain + unit;
+			System.out.println("query:" + key);
+			try {
+				JSONObject json = PriceCache.getPrice(market, chain, unit);
+				if (json != null) {
+					System.out.println("chain is:" + json.toJSONString());
+					return json.toJSONString();
+				} else {
+					return "chain not exists:" + key;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+			return "";
 		});
 	}
 
