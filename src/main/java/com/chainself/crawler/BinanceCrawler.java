@@ -2,9 +2,11 @@ package com.chainself.crawler;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.market.TickerPrice;
+import com.chainself.main.PriceCache;
 
 public class BinanceCrawler extends java.util.TimerTask {
 
@@ -15,13 +17,10 @@ public class BinanceCrawler extends java.util.TimerTask {
 	@Override
 	public void run() {
 		List<TickerPrice> allPriceList = client.getAllPrices();
-		int i = 0;
 		for (TickerPrice price : allPriceList) {
-			i++;
-			if (i > 10) {
-				return;
-			}
-			System.out.println(price.getPrice() + " " + price.getSymbol());
+			JSONObject priceJson = new JSONObject();
+			priceJson.put("close", price.getPrice());
+			PriceCache.savePrice("binance_" + price.getSymbol().toLowerCase(), priceJson);
 		}
 	}
 }
