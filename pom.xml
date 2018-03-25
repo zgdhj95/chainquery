@@ -30,6 +30,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.7</jdk.version>
 		
+    		<com.squareup.retrofit2.version>2.3.0</com.squareup.retrofit2.version>
 		
 		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
 		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
@@ -37,7 +38,23 @@
 	</properties>
 	
 	<dependencies>
-
+	
+    <dependency>
+		<groupId>com.squareup.retrofit2</groupId>
+	      <artifactId>retrofit</artifactId>
+	      <version>${com.squareup.retrofit2.version}</version>
+	    </dependency>
+    <dependency>
+      <groupId>com.squareup.retrofit2</groupId>
+      <artifactId>converter-jackson</artifactId>
+      <version>${com.squareup.retrofit2.version}</version>
+    </dependency>
+		<dependency>
+		  <groupId>com.binance.api</groupId>
+		  <artifactId>binance-api-client</artifactId>
+		  <version>1.0.0</version>
+		</dependency>
+		
 		 <dependency>
 		    <groupId>com.sparkjava</groupId>
 		    <artifactId>spark-core</artifactId>
