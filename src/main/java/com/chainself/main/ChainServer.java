@@ -55,7 +55,7 @@ public class ChainServer {
 	}
 
 	public static void startSparkHttpServer() throws Exception {
-		setPort(9998);
+		setPort(80);
 		get(new Route("/query") {
 			@Override
 			public Object handle(Request request, Response response) {
