@@ -68,7 +68,7 @@ public class HuobiCrawler extends java.util.TimerTask {
 		}
 
 		long time1 = System.currentTimeMillis();
-		System.out.println("  query time " + (time1 - time0) + " size=" + PriceCache.priceMap.size());
+		System.out.println(" huobi query time " + (time1 - time0) + " size=" + PriceCache.priceMap.size());
 	}
 
 	private static String[] usdtChains = new String[] { "btc", "bch", "eth", "etc", "ltc", "eos", "xrp", "omg", "dash",
