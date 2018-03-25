@@ -1,0 +1,1 @@
+nohup java -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8111 -Djava.rmi.server.hostname=119.28.55.163 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -jar target/boot-api-5.0.0-SNAPSHOT.jar&
