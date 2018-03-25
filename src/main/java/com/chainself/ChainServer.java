@@ -23,7 +23,7 @@ public class ChainServer {
 		System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "production");
 		FastHttpClient.okHttpClient.dispatcher().setMaxRequestsPerHost(10);
 		// startTimer();
-		HuobiCrawler.queryAllData();
+		// HuobiCrawler.queryAllData();
 		SpringApplication.run(ChainServer.class, args);
 	}
 
