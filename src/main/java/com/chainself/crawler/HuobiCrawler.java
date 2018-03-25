@@ -42,7 +42,6 @@ public class HuobiCrawler extends java.util.TimerTask {
 								.replaceAll(".detail.merged", "");
 						String chainKey = "huobi_" + chain;
 						PriceCache.savePrice(chainKey, (JSONObject) responseJson.get("tick"));
-						System.out.println(responseStr + " save key success:" + chainKey);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,12 +57,12 @@ public class HuobiCrawler extends java.util.TimerTask {
 			for (String chain : usdtChains) {
 				query(chain, "usdt");
 			}
-			// for (String chain : btcChains) {
-			// query(chain, "btc");
-			// }
-			// for (String chain : ethChains) {
-			// query(chain, "eth");
-			// }
+			for (String chain : btcChains) {
+				query(chain, "btc");
+			}
+			for (String chain : ethChains) {
+				query(chain, "eth");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
