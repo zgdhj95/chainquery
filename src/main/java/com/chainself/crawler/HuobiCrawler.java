@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.chainself.main.PriceCache;
+import com.chainself.cache.PriceCache;
 
 import io.itit.itf.okhttp.FastHttpClient;
 import io.itit.itf.okhttp.Response;

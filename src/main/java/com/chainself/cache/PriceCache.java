@@ -1,4 +1,4 @@
-package com.chainself.main;
+package com.chainself.cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 

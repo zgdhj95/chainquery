@@ -120,8 +120,9 @@ public class RequestCall {
 			}
 			client = builder.build();
 		}
-		logger.info("client.dispatcher().queuedCallsCount=" + client.dispatcher().queuedCallsCount()
-				+ " runningCallsCount=" + client.dispatcher().runningCallsCount());
+		// logger.info("client.dispatcher().queuedCallsCount=" +
+		// client.dispatcher().queuedCallsCount()
+		// + " runningCallsCount=" + client.dispatcher().runningCallsCount());
 		return buildCall(callback, client);
 	}
 

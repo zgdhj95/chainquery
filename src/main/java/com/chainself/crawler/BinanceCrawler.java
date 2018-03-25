@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.market.TickerPrice;
-import com.chainself.main.PriceCache;
+import com.chainself.cache.PriceCache;
 
 public class BinanceCrawler extends java.util.TimerTask {
 
