@@ -24,8 +24,7 @@ import java.util.Timer;
 import org.springframework.core.env.AbstractEnvironment;
 
 import com.alibaba.fastjson.JSONObject;
-import com.chainself.crawler.BinanceCrawler;
-import com.chainself.crawler.HuobiCrawler;
+import com.chainself.timer.QueryTimer;
 
 import io.itit.itf.okhttp.FastHttpClient;
 
@@ -49,8 +48,8 @@ public class ChainServer {
 	 */
 	private static void startTimer() {
 		Timer queryTimer = new Timer();
-		queryTimer.schedule(new HuobiCrawler(), 1000, 10000);
-		queryTimer.schedule(new BinanceCrawler(), 3000, 10000);
+		queryTimer.schedule(new QueryTimer(), 1000, 5000);
+		// queryTimer.schedule(new BinanceCrawler(), 3000, 10000);
 	}
 
 	public static void startSparkHttpServer() throws Exception {
