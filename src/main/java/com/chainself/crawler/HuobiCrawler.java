@@ -50,9 +50,7 @@ public class HuobiCrawler extends java.util.TimerTask {
 		});
 	}
 
-	@Override
-	public void run() {
-		long time0 = System.currentTimeMillis();
+	public static void queryAllData() {
 		try {
 			for (String chain : usdtChains) {
 				query(chain, "usdt");
@@ -66,6 +64,14 @@ public class HuobiCrawler extends java.util.TimerTask {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	@Override
+	public void run() {
+		long time0 = System.currentTimeMillis();
+
+		queryAllData();
 
 		long time1 = System.currentTimeMillis();
 		System.out.println(" huobi query time " + (time1 - time0) + " size=" + PriceCache.priceMap.size());
