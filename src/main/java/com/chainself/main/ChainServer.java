@@ -73,6 +73,7 @@ public class ChainServer {
 				try {
 					JSONObject json = PriceCache.getPrice(market, chain, unit);
 					if (json != null) {
+						System.out.println("chain is:" + json.toJSONString());
 						return json.toJSONString();
 					} else {
 						return "chain not exists:" + key;
