@@ -23,6 +23,7 @@ import java.util.Timer;
 
 import org.springframework.core.env.AbstractEnvironment;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chainself.crawler.BinanceCrawler;
 import com.chainself.crawler.HuobiCrawler;
 
@@ -67,8 +68,15 @@ public class ChainServer {
 						|| "".equals(unit)) {
 					return "";
 				}
+				String key = market + "_" + chain + unit;
+				System.out.println("query:" + key);
 				try {
-					return PriceCache.getPrice(market, chain, unit).toJSONString();
+					JSONObject json = PriceCache.getPrice(market, chain, unit);
+					if (json != null) {
+						return json.toJSONString();
+					} else {
+						return "chain not exists:" + key;
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
