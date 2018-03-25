@@ -31,8 +31,8 @@ public class ChainServer {
 	 */
 	private static void startTimer() {
 		Timer queryTimer = new Timer();
-		queryTimer.schedule(new HuobiCrawler(), 1000, 10000);
-		queryTimer.schedule(new BinanceCrawler(), 3000, 10000);
+		queryTimer.schedule(new HuobiCrawler(), 1000, 10000 * 1000);
+		queryTimer.schedule(new BinanceCrawler(), 3000, 10000 * 1000);
 	}
 
 }
