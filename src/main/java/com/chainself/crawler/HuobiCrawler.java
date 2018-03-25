@@ -26,10 +26,11 @@ public class HuobiCrawler extends java.util.TimerTask {
 
 	public static void query(String chain, String unit) throws Exception {
 		String url = HUOBI_API_BASE + chain + unit;
+		System.out.println("url=" + url);
 		FastHttpClient.get().addHeader("user-agent", HUOBI_AGENT).url(url).build().executeAsync(new Callback() {
 			@Override
 			public void onFailure(Call call, Exception e, long id) {
-				logger.error("get huobi error!", e);
+				System.out.println("get huobi error!" + e.getMessage());
 			}
 
 			@Override
