@@ -14,7 +14,7 @@ public class QueryTimer extends java.util.TimerTask {
 
 	@Override
 	public void run() {
-		FastHttpClient.get().url("http://123.207.241.107/query?market=huobi&chain=aidoc&unit=btc").build()
+		FastHttpClient.get().url("http://119.28.55.163/query?market=huobi&chain=aidoc&unit=btc").build()
 				.executeAsync(new Callback() {
 					@Override
 					public void onFailure(Call call, Exception e, long id) {
