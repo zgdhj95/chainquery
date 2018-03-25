@@ -3,9 +3,8 @@ package com.chainself.main;
 import java.util.Timer;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,8 +19,7 @@ import io.itit.itf.okhttp.FastHttpClient;
  * An HTTP server that sends back the content of the received HTTP request in a
  * pretty plaintext form.
  */
-@Controller
-@EnableAutoConfiguration
+@SpringBootApplication
 public class ChainServer {
 
 	public static void main(String[] args) throws Exception {
