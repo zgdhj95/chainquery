@@ -7,10 +7,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.chainself.main.PriceCache;
 
-import io.itit.itf.okhttp.FastHttpClient;
-import io.itit.itf.okhttp.Response;
-import io.itit.itf.okhttp.callback.Callback;
-import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 火币爬虫
@@ -20,35 +19,26 @@ import okhttp3.Call;
 
 public class HuobiCrawler extends java.util.TimerTask {
 	private static Logger logger = LoggerFactory.getLogger(HuobiCrawler.class);
-
+	private static OkHttpClient client = new OkHttpClient();
 	private final static String HUOBI_API_BASE = "https://api.huobi.pro/market/detail/merged?symbol=";
 	private final static String HUOBI_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36";
 
 	public static void query(String chain, String unit) throws Exception {
 		String url = HUOBI_API_BASE + chain + unit;
-		System.out.println("url=" + url);
-		FastHttpClient.get().addHeader("user-agent", HUOBI_AGENT).url(url).build().executeAsync(new Callback() {
-			@Override
-			public void onFailure(Call call, Exception e, long id) {
-				System.out.println("get huobi error!" + e.getMessage());
-			}
 
-			@Override
-			public void onResponse(Call call, Response response, long id) {
-				try {
-					String responseStr = response.body().string();
-					JSONObject responseJson = (JSONObject) JSON.toJSON(responseStr);
-					if ("ok".equals(responseJson.getString("status"))) {
-						String chain = responseJson.getString("ch").replaceAll("market.", "")
-								.replaceAll(".detail.merged", "");
-						String chainKey = "huobi_" + chain;
-						PriceCache.savePrice(chainKey, (JSONObject) responseJson.get("tick"));
-						System.out.println(responseStr + " save key success:" + chainKey);
-					}
-				} catch (Exception e) {
-				}
-			}
-		});
+		System.out.println("url=" + url);
+		Request request = new Request.Builder().url(HUOBI_API_BASE + "/market/depth?symbol=ethusdt&type=step0")
+				.header("user-agent", HUOBI_AGENT).build();
+		Response response = client.newCall(request).execute();
+		String responseStr = response.body().string();
+		System.out.println(responseStr);
+		JSONObject responseJson = (JSONObject) JSON.toJSON(responseStr);
+		if ("ok".equals(responseJson.getString("status"))) {
+			String chainName = responseJson.getString("ch").replaceAll("market.", "").replaceAll(".detail.merged", "");
+			String chainKey = "huobi_" + chainName;
+			PriceCache.savePrice(chainKey, (JSONObject) responseJson.get("tick"));
+			System.out.println(" save key success:" + chainKey);
+		}
 	}
 
 	@Override
