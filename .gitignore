@@ -1,0 +1,9 @@
+/bin
+/logs
+/target
+*.log
+Thumbs.db
+.settings/com.genuitec.eclipse.migration.prefs
+src/main/webapp/WEB-INF/sun.misc.BASE64Decoder.jar
+/target/
+*.class

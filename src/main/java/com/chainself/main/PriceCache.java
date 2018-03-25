@@ -2,17 +2,18 @@ package com.chainself.main;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class PriceCache {
 
-	private static ConcurrentHashMap<String, Double> priceMap = new ConcurrentHashMap<String, Double>();
+	private static ConcurrentHashMap<String, JSONObject> priceMap = new ConcurrentHashMap<String, JSONObject>();
 
-	public void savePrice(String market, String chain, String unit, Double price) {
-		String key = (market + "_" + chain + "_" + unit).toUpperCase();
+	public static void savePrice(String key, JSONObject price) {
 		priceMap.put(key, price);
 	}
 
-	public Double getPrice(String market, String chain, String unit) {
-		String key = (market + "_" + chain + "_" + unit).toUpperCase();
+	public static JSONObject getPrice(String market, String chain, String unit) {
+		String key = (market + "_" + chain + unit).toLowerCase();
 		return priceMap.get(key);
 	}
 }

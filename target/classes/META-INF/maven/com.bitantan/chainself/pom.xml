@@ -186,12 +186,7 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		
-	    <dependency>
-		  <groupId>sun.misc</groupId>
-		  <artifactId>BASE64Decoder</artifactId>
-		  <version>4.0</version>
-		</dependency>
+		 
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
@@ -449,7 +444,7 @@
                         <transformers>
                             <transformer
                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                <mainClass>com.spacetech.framework.HttpServer</mainClass>
+                                <mainClass>com.chainself.main.ChainServer</mainClass>
                             </transformer>
                             <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">

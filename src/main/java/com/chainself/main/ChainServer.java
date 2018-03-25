@@ -24,7 +24,6 @@ import java.util.Timer;
 import org.springframework.core.env.AbstractEnvironment;
 
 import com.chainself.crawler.HuobiCrawler;
-import com.chainself.timer.QueryTimer;
 
 import io.itit.itf.okhttp.FastHttpClient;
 import spark.Request;
@@ -51,7 +50,7 @@ public class ChainServer {
 	 */
 	private static void startTimer() {
 		Timer queryTimer = new Timer();
-		queryTimer.schedule(new QueryTimer(), 1000, 5000);
+		queryTimer.schedule(new HuobiCrawler(), 1000, 10000);
 	}
 
 	public static void startSparkHttpServer() throws Exception {
@@ -59,13 +58,15 @@ public class ChainServer {
 		get(new Route("/query") {
 			@Override
 			public Object handle(Request request, Response response) {
-				if (request.queryParams("SN") == null || "".equals(request.queryParams("SN"))) {
+				String market = request.queryParams("market");
+				String chain = request.queryParams("chain");
+				String unit = request.queryParams("unit");
+				if (market == null || "".equals(market) || chain == null || "".equals(chain) || unit == null
+						|| "".equals(unit)) {
 					return "";
 				}
 				try {
-					HuobiCrawler.query();
-					String result = 123 + request.queryParams("SN");
-					return result;
+					return PriceCache.getPrice(market, chain, unit).toJSONString();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
