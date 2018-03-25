@@ -6,8 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.AbstractEnvironment;
 
-import com.chainself.crawler.BinanceCrawler;
-import com.chainself.crawler.HuobiCrawler;
+import com.chainself.timer.QueryTimer;
 
 import io.itit.itf.okhttp.FastHttpClient;
 
@@ -22,7 +21,7 @@ public class ChainServer {
 
 		System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "production");
 		FastHttpClient.okHttpClient.dispatcher().setMaxRequestsPerHost(10);
-		// startTimer();
+		startTimer();
 		// HuobiCrawler.queryAllData();
 		SpringApplication.run(ChainServer.class, args);
 	}
@@ -32,8 +31,7 @@ public class ChainServer {
 	 */
 	private static void startTimer() {
 		Timer queryTimer = new Timer();
-		queryTimer.schedule(new HuobiCrawler(), 1000, 10000 * 1000);
-		queryTimer.schedule(new BinanceCrawler(), 3000, 10000 * 1000);
+		queryTimer.schedule(new QueryTimer(), 1000, 5000);
 	}
 
 }
