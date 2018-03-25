@@ -1,27 +1,14 @@
 package com.chainself.main;
 
-/*
- * Copyright 2012 The Netty Project
- *
- * The Netty Project licenses this file to you under the Apache License,
- * version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at:
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, eiather express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- */
-import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.threadPool;
-
 import java.util.Timer;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.env.AbstractEnvironment;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chainself.crawler.BinanceCrawler;
@@ -33,6 +20,8 @@ import io.itit.itf.okhttp.FastHttpClient;
  * An HTTP server that sends back the content of the received HTTP request in a
  * pretty plaintext form.
  */
+@Controller
+@EnableAutoConfiguration
 public class ChainServer {
 
 	public static void main(String[] args) throws Exception {
@@ -40,8 +29,7 @@ public class ChainServer {
 		System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "production");
 		FastHttpClient.okHttpClient.dispatcher().setMaxRequestsPerHost(10);
 		startTimer();
-		startSparkHttpServer();
-
+		SpringApplication.run(ChainServer.class, args);
 	}
 
 	/**
@@ -53,33 +41,28 @@ public class ChainServer {
 		queryTimer.schedule(new BinanceCrawler(), 3000, 10000);
 	}
 
-	public static void startSparkHttpServer() throws Exception {
-		int maxThreads = 10;
-		threadPool(maxThreads);
-		port(80);
-		get("/query", (req, res) -> {
-			String market = req.queryParams("market");
-			String chain = req.queryParams("chain");
-			String unit = req.queryParams("unit");
-			if (market == null || "".equals(market) || chain == null || "".equals(chain) || unit == null
-					|| "".equals(unit)) {
-				return "";
-			}
-			String key = market + "_" + chain + unit;
-			System.out.println("query:" + key);
-			try {
-				JSONObject json = PriceCache.getPrice(market, chain, unit);
-				if (json != null) {
-					System.out.println("chain is:" + json.toJSONString());
-					return json.toJSONString();
-				} else {
-					return "chain not exists:" + key;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	@RequestMapping("/query")
+	@ResponseBody
+	String query(@RequestParam("market") String market, @RequestParam("chain") String chain,
+			@RequestParam("unit") String unit) {
+		if (market == null || "".equals(market) || chain == null || "".equals(chain) || unit == null
+				|| "".equals(unit)) {
 			return "";
-		});
+		}
+		String key = market + "_" + chain + unit;
+		System.out.println("query:" + key);
+		try {
+			JSONObject json = PriceCache.getPrice(market, chain, unit);
+			if (json != null) {
+				System.out.println("chain is:" + json.toJSONString());
+				return json.toJSONString();
+			} else {
+				return "chain not exists:" + key;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 }
