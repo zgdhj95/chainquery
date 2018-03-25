@@ -1,0 +1,16 @@
+2018-03-25 11:04:56 MatcherFilter.java ERROR 
+java.lang.NullPointerException
+	at com.chainself.main.ChainServer.getService(ChainServer.java:44)
+	at com.chainself.main.ChainServer$1.handle(ChainServer.java:71)
+	at spark.webserver.MatcherFilter.doFilter(MatcherFilter.java:139)
+	at spark.webserver.JettyHandler.doHandle(JettyHandler.java:54)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:179)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:136)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:97)
+	at org.eclipse.jetty.server.Server.handle(Server.java:451)
+	at org.eclipse.jetty.server.HttpChannel.run(HttpChannel.java:252)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:266)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.run(AbstractConnection.java:240)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:596)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:527)
+	at java.lang.Thread.run(Thread.java:748)
