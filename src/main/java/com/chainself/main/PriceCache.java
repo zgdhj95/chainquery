@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 
 public class PriceCache {
 
-	private static ConcurrentHashMap<String, JSONObject> priceMap = new ConcurrentHashMap<String, JSONObject>();
+	public static ConcurrentHashMap<String, JSONObject> priceMap = new ConcurrentHashMap<String, JSONObject>();
 
 	public static void savePrice(String key, JSONObject price) {
 		priceMap.put(key, price);
@@ -16,4 +16,5 @@ public class PriceCache {
 		String key = (market + "_" + chain + unit).toLowerCase();
 		return priceMap.get(key);
 	}
+
 }

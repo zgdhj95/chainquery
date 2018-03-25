@@ -42,6 +42,7 @@ public class HuobiCrawler extends java.util.TimerTask {
 								.replaceAll(".detail.merged", "");
 						String chainKey = "huobi_" + chain;
 						PriceCache.savePrice(chainKey, (JSONObject) responseJson.get("tick"));
+						System.out.println(responseStr + " save key success:" + chainKey);
 					}
 				} catch (Exception e) {
 				}
@@ -56,18 +57,18 @@ public class HuobiCrawler extends java.util.TimerTask {
 			for (String chain : usdtChains) {
 				query(chain, "usdt");
 			}
-			for (String chain : btcChains) {
-				query(chain, "btc");
-			}
-			for (String chain : ethChains) {
-				query(chain, "eth");
-			}
+			// for (String chain : btcChains) {
+			// query(chain, "btc");
+			// }
+			// for (String chain : ethChains) {
+			// query(chain, "eth");
+			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		long time1 = System.currentTimeMillis();
-		System.out.println("  query time " + (time1 - time0));
+		System.out.println("  query time " + (time1 - time0) + " size=" + PriceCache.priceMap.size());
 	}
 
 	private static String[] usdtChains = new String[] { "btc", "bch", "eth", "etc", "ltc", "eos", "xrp", "omg", "dash",
