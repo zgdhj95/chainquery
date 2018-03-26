@@ -33,7 +33,7 @@ import io.itit.itf.okhttp.FastHttpClient;
  * An HTTP server that sends back the content of the received HTTP request in a
  * pretty plaintext form.
  */
-public class ChainServer {
+public class PriceServer {
 
 	public static void main(String[] args) throws Exception {
 
