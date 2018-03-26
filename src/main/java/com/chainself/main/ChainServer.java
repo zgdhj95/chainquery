@@ -80,6 +80,20 @@ public class ChainServer {
 			}
 			return "";
 		});
+
+		get("/queryall", (req, res) -> {
+			try {
+				JSONObject json = PriceCache.makeAllPrice();
+				if (json != null) {
+					return json;
+				} else {
+					return "queryall not exists";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return "";
+		});
 	}
 
 }

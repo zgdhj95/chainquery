@@ -17,4 +17,8 @@ public class PriceCache {
 		return priceMap.get(key);
 	}
 
+	public static JSONObject makeAllPrice() {
+		return (JSONObject) JSONObject.toJSON(priceMap);
+	}
+
 }
